@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpringFood | Registration</title>
+    <style>
+        body {
+            background-color: #f8f9fa; /* Light background */
+            font-family: Arial, sans-serif;
+        }
+
+        .container.body {
+            padding: 50px 0;
+        }
+
+        h1 {
+            margin-bottom: 40px;
+            color: #333; /* Darker text for the heading */
+        }
+
+        .registration-container {
+            background: white; /* White background for the form */
+            border-radius: 8px; /* Rounded corners */
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            padding: 30px; /* Padding inside the form */
+            max-width: 600px; /* Maximum width of the form */
+            margin: auto; /* Center the form */
+        }
+
+        .form-group {
+            margin-bottom: 20px; /* Space between form fields */
+        }
+
+        label {
+            font-weight: bold; /* Bold labels */
+            margin-bottom: 5px; /* Space below labels */
+            display: block; /* Make labels block-level for better spacing */
+        }
+
+        .input-group {
+            display: flex; /* Flexbox for input and button */
+            align-items: center; /* Center items vertically */
+        }
+
+        .input-group-append {
+            margin-left: 10px; /* Space between input and button */
+        }
+
+        input[type="text"], input[type="email"], input[type="password"], select {
+            height: 45px; /* Uniform input height */
+            font-size: 16px; /* Larger font size */
+            width: 100%; /* Make inputs full-width */
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ced4da;
+        }
+
+        .btn {
+            width: 100%; /* Full width buttons */
+            padding: 10px; /* Padding in buttons */
+            font-size: 16px; /* Larger font size */
+            margin-top: 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background-color: #007bff; /* Primary button color */
+            border: none; /* No border */
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3; /* Darker on hover */
+        }
+
+        .btn-secondary {
+            background-color: #6c757d; /* Secondary button color */
+            border: none; /* No border */
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268; /* Darker on hover */
+        }
+
+        .alert {
+            margin-bottom: 20px; /* Space below alerts */
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .alert-box {
+            width: 75%;
+            margin: auto;
+        }
+
+        .password-tooltip {
+            color: red; /* Tooltip text color */
+            font-size: 14px; /* Font size for tooltip */
+            margin-top: 5px;
+        }
+
+        .invalid-feedback {
+            color: red; /* Invalid feedback text color */
+            font-size: 14px; /* Font size for feedback */
+            margin-top: 5px;
+        }
+
+        /* Style for buttons in the form */
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container body">
+        <h1 align="center">SpringFood | Registration</h1>
+
+        <div class="registration-container">
+            <form name="form" #f="ngForm" (ngSubmit)="emailValidation && phoneValidation && passwordValidation && f.form.valid && registerUser()" novalidate>
+                <div *ngIf="present" class="alert alert-danger alert-box">
+                    <strong>Username Already Taken!</strong>
+                </div>
+                <div *ngIf="!present" class="alert alert-success alert-box">
+                    <strong>Username Available!</strong>
+                </div>
+
+                <!-- UserName -->
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <div class="input-group">
+                        <input type="text" id="username" class="form-control" name="username" placeholder="Your Username" [(ngModel)]="model.username" #username="ngModel" [ngClass]="{ 'is-invalid': f.submitted && username.invalid }" required />
+                        <div class="input-group-append">
+                            <a (click)="usernamePresent()" data-toggle="tooltip" data-placement="right" title="Click to check availability"><img src="../../assets/images/checkAvailability.png" alt="Check Availability" style="height: 25px;width: 25px;"></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Password -->
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input (keyup)="passwordStrength()" type="password" id="password" class="form-control" name="password" placeholder="Your Password" [(ngModel)]="model.password" #password="ngModel" minlength="8" maxlength="16" [ngClass]="{ 'is-invalid': f.submitted && password.invalid }" required />
+                    <div class="password-tooltip" *ngIf="!passwordValidation">
+                    </div>
+                </div>
+
+                <!-- First Name -->
+                <div class="form-group">
+                    <label for="firstname">First Name</label>
+                    <input type="text" id="firstname" class="form-control" name="firstname" placeholder="Your Firstname" [(ngModel)]="model.firstname" #firstname="ngModel" [ngClass]="{ 'is-invalid': f.submitted && firstname.invalid }" required />
+                </div>
+
+                <!-- Last Name -->
+                <div class="form-group">
+                    <label for="lastname">Last Name</label>
+                    <input type="text" id="lastname" class="form-control" name="lastname" placeholder="Your Lastname" [(ngModel)]="model.lastname" #lastname="ngModel" [ngClass]="{ 'is-invalid': f.submitted && lastname.invalid }" required />
+                </div>
+
+                <!-- Email -->
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input (keyup)="checkEmail()" type="email" id="email" class="form-control" name="email" placeholder="Email" [(ngModel)]="model.email" #email="ngModel" [ngClass]="{ 'is-invalid': f.submitted && email.invalid }" required />
+                    <div *ngIf="!emailValidation" class="invalid-feedback">Not a valid email</div>
+                </div>
+
+                <!-- Address -->
+                <div class="form-group">
+                    <label for="address">Address</label>
+                    <input type="text" id="address" class="form-control" name="address" placeholder="Address" [(ngModel)]="model.address" #address="ngModel" [ngClass]="{ 'is-invalid': f.submitted && address.invalid }" required />
+                </div>
+
+                <!-- Phone -->
+                <div class="form-group">
+                    <label for="phone">Phone</label>
+                    <input (keyup)="checkPhone()" type="text" id="phone" class="form-control" name="phone" placeholder="Phone" [(ngModel)]="model.phone" #phone="ngModel" [ngClass]="{ 'is-invalid': f.submitted && phone.invalid }" maxlength="10" minlength="10" required />
+                    <div *ngIf="!phoneValidation" class="invalid-feedback">Invalid Phone Number</div>
+                </div>
+
+                <!-- Account Type -->
+                <div class="form-group">
+                    <label>Account Type</label>
+                    <select class="form-control" [(ngModel)]="options" name="options" id="options">
+                        <option>User</option>
+                        <option>Merchant</option>
+                    </select>
+                </div>
+
+                <!-- Submit Buttons -->
+                <div class="button-group">
+                    <button type="submit" class="btn btn-primary">Register</button>
+                    <button routerLink="/home" class="btn btn-secondary">Home</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
