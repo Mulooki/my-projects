@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Student Application Form</h2>
+
+<form>
+  <fieldset>
+  <legend><b>Student Data:</b></legend><br>
+
+  <label for="fname">First name:</label>
+  <input type="text" id="fname" name="fname"><br><br>
+
+  <label for="lname">Last name:</label>
+  <input type="text" id="lname" name="lname"><br><br>
+
+  <label for="dob">Date of Birth:</label>
+  <input type="date" id="dob" name="dob"><br><br>
+
+  <label for="email">Enter your email:</label>
+  <input type="email" id="email" name="email"><br><br>
+
+  <label for="pwd">Password:</label>
+  <input type="password" id="pwd" name="pwd"><br><br>
+  A
+  <label for="gender">Gender:</label><br>
+  <input type="radio" id="male" name="gender" value="male">
+
+  <label for="html">Male</label><br>
+  <input type="radio" id="female" name="gender" value="Female">
+
+  <label for="other">Female</label><br>
+  <input type="radio" id="female" name="gender" value="female">
+
+  <label for="Other">Other</label><br><br>
+  
+  <!-- Use of Checkbox: Allows multiple selection-->
+  <label for="Other">Programmes applied for (choose atleast two)</label><br>
+  <input type="checkbox" >
+
+  <label > Diploma in Computer Science</label><br>
+
+  <input type="checkbox">
+
+  <label > Diploma in Information Technology, Business</label><br>
+
+  <input type="checkbox" >
+  
+  <label > Diploma in Electrical Engineering</label><br><br>
+    
+  <!-- Use of Select: Defines a drop-down list-->
+  <label >Choose District:</label>
+  <select id="district" name="district">
+    <option value="abim">Abim</option>
+    <option value="lira">Lira</option>
+    <option value="masak">Masaka</option>
+    <option value="kamwenge">Kamwenge</option>
+  </select><br><br>
+
+<!-- Use of Textarea: Allows multi-line input field-->
+<label for="message">In about 50 words, describe why you chose UICT:</label><br>
+<textarea name="message" rows="5" cols="40"></textarea><br><br>
+
+<label for="myfile">Upload your Academic Documents:</label>
+<input type="file" id="myfile" name="myfile"><br><br>
+
+<input type="submit" value="Submit">
+<input type="submit" value="Cancel">
+
+</fieldset>
+</form> 
+
+</body>
+</html>
